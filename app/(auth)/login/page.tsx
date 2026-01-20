@@ -37,6 +37,9 @@ export default function LoginPage() {
       <p className="mt-2 text-sm text-slate-400">
         Sign in to manage estimates and job costs.
       </p>
+      <p className="mt-2 text-xs text-slate-500">
+        First time? Create an account with Register. If login fails, confirm the database is connected.
+      </p>
       <form onSubmit={onSubmit} className="mt-8 space-y-4">
         <label className="block text-sm font-medium text-slate-300">
           Email

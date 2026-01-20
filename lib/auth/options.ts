@@ -28,10 +28,6 @@ export const authOptions: NextAuthOptions = {
           return null;
         }
 
-        if (!user.emailVerifiedAt) {
-          return null;
-        }
-
         const isValid = await verifyPassword(password, user.passwordHash);
         if (!isValid) {
           return null;

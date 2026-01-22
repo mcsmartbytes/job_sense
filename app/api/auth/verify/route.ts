@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     .limit(1);
 
   const record = records[0];
-  if (!record) {
+  if (!record || !record.userId) {
     return NextResponse.json({ error: "Invalid or expired token" }, { status: 400 });
   }
 

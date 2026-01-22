@@ -1,17 +1,8 @@
 /**
- * Area Bid Helper Industry Configurations
+ * Job Sense Industry Configurations
  *
  * This module provides industry-specific configurations that control
  * branding, terminology, features, services, and workflows.
- *
- * Each industry has:
- * - Branding (colors, logos)
- * - Terminology (what to call jobs, clients, estimates)
- * - Feature flags (which modules to show)
- * - Phases (workflow stages with tasks)
- * - Services (with measurement types and rates)
- * - Custom fields (for job forms)
- * - Reports and navigation
  */
 
 // Type exports
@@ -19,37 +10,13 @@ export * from './types';
 
 // Industry config exports
 export { sealingStripingConfig, default as sealingStriping } from './sealing-striping';
-export { roofingConfig, default as roofing } from './roofing';
-export { concreteConfig, default as concrete } from './concrete';
-export { landscapingConfig, default as landscaping } from './landscaping';
-export { generalContractorConfig, default as generalContractor } from './general-contractor';
-export { fencingConfig, default as fencing } from './fencing';
-export { paintingConfig, default as painting } from './painting';
-export { hvacConfig, default as hvac } from './hvac';
-
-// HVAC rules engine exports
-export * from './hvac-rules';
 
 // All configs as a map
 import { sealingStripingConfig } from './sealing-striping';
-import { roofingConfig } from './roofing';
-import { concreteConfig } from './concrete';
-import { landscapingConfig } from './landscaping';
-import { generalContractorConfig } from './general-contractor';
-import { fencingConfig } from './fencing';
-import { paintingConfig } from './painting';
-import { hvacConfig } from './hvac';
 import type { IndustryConfig, Service } from './types';
 
 export const industries: Record<string, IndustryConfig> = {
   'sealing-striping': sealingStripingConfig,
-  'roofing': roofingConfig,
-  'concrete': concreteConfig,
-  'landscaping': landscapingConfig,
-  'general-contractor': generalContractorConfig,
-  'fencing': fencingConfig,
-  'painting': paintingConfig,
-  'hvac': hvacConfig,
 };
 
 /**

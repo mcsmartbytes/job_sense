@@ -1,12 +1,12 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 type VerifyState = "idle" | "loading" | "success" | "error";
 
-export default function VerifyPage() {
+function VerifyForm() {
   const [state, setState] = useState<VerifyState>("idle");
   const searchParams = useSearchParams();
   const token = searchParams.get("token");
@@ -42,5 +42,13 @@ export default function VerifyPage() {
       )}
       {state === "error" && <p>Verification link is invalid or expired.</p>}
     </main>
+  );
+}
+
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={<div className="text-slate-400">Verifying...</div>}>
+      <VerifyForm />
+    </Suspense>
   );
 }

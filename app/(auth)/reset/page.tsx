@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
 type ResetState = "idle" | "loading" | "success" | "error";
 
-export default function ResetPage() {
+function ResetForm() {
   const [password, setPassword] = useState("");
   const [state, setState] = useState<ResetState>("idle");
   const searchParams = useSearchParams();
@@ -59,5 +59,13 @@ export default function ResetPage() {
       )}
       {state === "error" && <p className="text-sm text-red-400">Unable to reset password.</p>}
     </main>
+  );
+}
+
+export default function ResetPage() {
+  return (
+    <Suspense fallback={<div className="text-slate-400">Loading...</div>}>
+      <ResetForm />
+    </Suspense>
   );
 }

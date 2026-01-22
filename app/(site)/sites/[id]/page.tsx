@@ -41,7 +41,7 @@ export default async function SiteDetailPage({
     geometry: obj.geometry as GeoJSON.Geometry,
     measurements: obj.measurements as any,
     properties: {},
-    source: "manual",
+    source: "manual" as const,
     confidence: null,
     label: null,
     color: null,

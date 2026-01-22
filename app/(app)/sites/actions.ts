@@ -23,8 +23,6 @@ export async function createSite(formData: FormData) {
     name,
     address: address || null,
   });
-
-  return { ok: true };
 }
 
 export async function listSites(userId: string) {

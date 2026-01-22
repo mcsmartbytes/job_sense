@@ -33,11 +33,10 @@ export async function seedCostCodes() {
 
   const existing = await db.select().from(costCodes).limit(1);
   if (existing.length > 0) {
-    return { ok: true };
+    return;
   }
 
   await db.insert(costCodes).values(defaultCostCodes);
-  return { ok: true };
 }
 
 export async function listSitesForUser(userId: string) {

@@ -15,7 +15,7 @@
     "@mapbox/mapbox-gl-draw": "^1.5.1",
     "@mapbox/mapbox-gl-geocoder": "^5.1.2",
     "@turf/turf": "^7.3.2",
-    "@vercel/postgres": "^0.10.0",
+    "@neondatabase/serverless": "^0.10.4",
     "bcryptjs": "^3.0.3",
     "dotenv": "^17.2.3",
     "drizzle-orm": "^0.45.1",

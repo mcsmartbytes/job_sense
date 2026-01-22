@@ -128,6 +128,10 @@ export default function SiteDetailClient({
     setAIFeatures((prev) => prev.filter((f) => !rejectedIds.has(f.id)));
   }, []);
 
+  const handleClearOverlay = useCallback(() => {
+    setBlueprintOverlay(null);
+  }, []);
+
   return (
     <div className="site-layout">
       <PrefHydrator />
@@ -241,6 +245,3 @@ export default function SiteDetailClient({
     </div>
   );
 }
-  const handleClearOverlay = useCallback(() => {
-    setBlueprintOverlay(null);
-  }, []);

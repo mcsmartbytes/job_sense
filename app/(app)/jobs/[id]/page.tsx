@@ -8,8 +8,9 @@ import { addJobCost, listCostCodes, listJobCosts } from "../actions";
 export default async function JobDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const session = await getSession();
   if (!session?.user?.id) {
     notFound();
@@ -18,7 +19,7 @@ export default async function JobDetailPage({
   const jobResult = await db
     .select()
     .from(jobs)
-    .where(and(eq(jobs.id, params.id), eq(jobs.userId, session.user.id)))
+    .where(and(eq(jobs.id, id), eq(jobs.userId, session.user.id)))
     .limit(1);
 
   const job = jobResult[0];

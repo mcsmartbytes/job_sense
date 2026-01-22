@@ -8,8 +8,9 @@ import SiteDetailClient from "./SiteDetailClient";
 export default async function SiteDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const session = await getSession();
   if (!session?.user?.id) {
     notFound();
@@ -18,7 +19,7 @@ export default async function SiteDetailPage({
   const result = await db
     .select()
     .from(sites)
-    .where(eq(sites.id, params.id))
+    .where(eq(sites.id, id))
     .limit(1);
 
   const site = result[0];
@@ -33,7 +34,7 @@ export default async function SiteDetailPage({
 
   const initialObjects = objects.map((obj) => ({
     id: obj.id,
-    site_id: obj.siteId,
+    site_id: site.id,
     object_type: obj.objectType as any,
     sub_type: null,
     tags: [],

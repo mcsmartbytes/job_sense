@@ -13,8 +13,9 @@ import { addLineItem, convertEstimateToJob, deleteLineItem, listCostCodes } from
 export default async function EstimateDetailPage({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }) {
+  const { id } = await params;
   const session = await getSession();
   if (!session?.user?.id) {
     notFound();
@@ -23,7 +24,7 @@ export default async function EstimateDetailPage({
   const estimateResult = await db
     .select()
     .from(estimates)
-    .where(and(eq(estimates.id, params.id), eq(estimates.userId, session.user.id)))
+    .where(and(eq(estimates.id, id), eq(estimates.userId, session.user.id)))
     .limit(1);
 
   const estimate = estimateResult[0];

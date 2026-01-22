@@ -6,14 +6,14 @@ import { getSession } from "@/lib/auth/session";
 
 export async function POST(
   request: Request,
-  context: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   const session = await getSession();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const siteId = context.params.id;
+  const { id: siteId } = await params;
   const existing = await db
     .select()
     .from(sites)

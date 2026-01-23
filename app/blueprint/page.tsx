@@ -285,11 +285,9 @@ export default function BlueprintPage() {
     async function fetchDocuments() {
       try {
         const response = await fetch('/api/pdf/upload');
-        if (response.ok) {
-          const data = await response.json();
-          if (data.success) {
-            setDocuments(data.documents);
-          }
+        const data = await response.json();
+        if (data.success) {
+          setDocuments(data.documents);
         }
       } catch (error) {
         console.error('Failed to fetch documents:', error);
@@ -400,19 +398,6 @@ export default function BlueprintPage() {
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Link
-              href="/"
-              style={{
-                padding: '8px 16px',
-                border: '1px solid #d1d5db',
-                color: '#374151',
-                borderRadius: '8px',
-                textDecoration: 'none',
-                fontSize: '14px',
-              }}
-            >
-              Home
-            </Link>
-            <Link
               href="/dashboard"
               style={{
                 padding: '8px 16px',
@@ -429,8 +414,8 @@ export default function BlueprintPage() {
               href="/site"
               style={{
                 padding: '8px 16px',
-                background: '#3b82f6',
-                color: 'white',
+                border: '1px solid #d1d5db',
+                color: '#374151',
                 borderRadius: '8px',
                 textDecoration: 'none',
                 fontSize: '14px',

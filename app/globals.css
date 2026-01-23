@@ -11,7 +11,6 @@
 }
 
 .home-hero-bg {
-  background-image: var(--hero-image);
   background-attachment: fixed;
   background-position: 8% top;
   background-repeat: no-repeat;

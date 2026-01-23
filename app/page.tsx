@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signOut } from 'next-auth/react';
+import logoImage from '@/assets/rule-tool-logo.png';
 import heroImage from '@/assets/rule-tool-hero.png';
 
 // Stats data
@@ -67,8 +68,8 @@ const FEATURES = [
     icon: '💰',
   },
   {
-    title: 'Job Costing',
-    description: 'Track budgets vs actuals after winning the bid',
+    title: 'Bid Pipeline',
+    description: 'Track all your bids from lead to won with a visual Kanban board',
     icon: '📊',
   },
 ];
@@ -88,8 +89,8 @@ const FAQS = [
     answer: 'Yes! You can upload PDF blueprints and our AI will analyze them to extract measurements, materials, and area calculations automatically.',
   },
   {
-    question: 'What happens after I win a bid?',
-    answer: 'Job Sense seamlessly transitions your estimate into a live job where you can track actual costs against your budget, manage progress, and analyze margins.',
+    question: 'Is my data secure?',
+    answer: 'Yes. All data is encrypted in transit and at rest. We never share your customer information or bid data with third parties.',
   },
 ];
 
@@ -132,10 +133,6 @@ export default function HomePage() {
         backgroundImage: `url(${heroImage.src})`,
         backgroundColor: 'rgba(255,255,255,0.08)',
         backgroundBlendMode: 'screen',
-        backgroundAttachment: 'fixed',
-        backgroundPosition: '8% top',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
         overflowX: 'hidden',
       }}
     >
@@ -144,28 +141,20 @@ export default function HomePage() {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '12px 24px',
+        padding: '12px 16px',
         maxWidth: '100%',
         margin: '0',
-        background: 'rgba(17, 25, 40, 0.75)',
-        backdropFilter: 'blur(14px) saturate(140%)',
-        WebkitBackdropFilter: 'blur(14px) saturate(140%)',
-        borderBottom: '1px solid rgba(255,255,255,0.15)',
         borderRadius: '0',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" strokeWidth="2">
-              <rect x="2" y="6" width="16" height="12" rx="2" fill="#3b82f6" stroke="none" />
-              <path d="M18 12 L22 12" stroke="#3b82f6" strokeWidth="3" />
-              <line x1="5" y1="9" x2="5" y2="11" stroke="white" strokeWidth="1.5" />
-              <line x1="8" y1="9" x2="8" y2="12" stroke="white" strokeWidth="1.5" />
-              <line x1="11" y1="9" x2="11" y2="11" stroke="white" strokeWidth="1.5" />
-              <line x1="14" y1="9" x2="14" y2="12" stroke="white" strokeWidth="1.5" />
-              <path d="M22 10 L22 14" stroke="#3b82f6" strokeWidth="2" />
-            </svg>
-            <span style={{ fontSize: '24px', fontWeight: 700, color: 'white' }}>Job Sense</span>
-          </div>
+          <Image
+            src={logoImage}
+            alt="Job Sense"
+            width={180}
+            height={50}
+            style={{ objectFit: 'contain' }}
+            priority
+          />
         </div>
         <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
           {isAuthenticated ? (
@@ -257,7 +246,7 @@ export default function HomePage() {
           position: 'relative',
           zIndex: 1,
         }}>
-          ESTIMATING + JOB COSTING
+          SITE-FIRST ESTIMATING
         </div>
 
         <h1 style={{
@@ -283,26 +272,19 @@ export default function HomePage() {
           zIndex: 1,
         }}>
           Stop measuring the same property multiple times. Enter an address, trace your areas,
-          and get instant estimates. Track job costs after you win.
+          and get instant estimates across all your trades.
         </p>
 
         {/* Main CTA Form */}
-        <form onSubmit={handleSubmit} className="glass" style={{
+        <form onSubmit={handleSubmit} style={{
           display: 'flex',
           gap: '12px',
-          maxWidth: '560px',
+          maxWidth: '500px',
           margin: '0 auto 24px',
           flexWrap: 'wrap',
           justifyContent: 'center',
           position: 'relative',
           zIndex: 1,
-          padding: '20px 24px',
-          background: 'rgba(17, 25, 40, 0.65)',
-          backdropFilter: 'blur(14px) saturate(140%)',
-          WebkitBackdropFilter: 'blur(14px) saturate(140%)',
-          border: '1px solid rgba(255,255,255,0.15)',
-          borderRadius: '20px',
-          boxShadow: '0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)',
         }}>
           <input
             type="text"
@@ -315,7 +297,7 @@ export default function HomePage() {
               padding: '16px 20px',
               borderRadius: '12px',
               border: '1px solid rgba(255,255,255,0.2)',
-              background: 'rgba(0,0,0,0.3)',
+              background: 'rgba(255,255,255,0.1)',
               color: 'white',
               fontSize: '16px',
               outline: 'none',
@@ -334,7 +316,6 @@ export default function HomePage() {
               fontWeight: 600,
               cursor: !address.trim() ? 'not-allowed' : 'pointer',
               transition: 'all 0.2s',
-              boxShadow: address.trim() ? '0 4px 14px rgba(59, 130, 246, 0.4)' : 'none',
             }}
           >
             {isSubmitting ? 'Loading...' : 'Start Estimating'}
@@ -347,17 +328,15 @@ export default function HomePage() {
       </section>
 
       {/* Stats Section */}
-      <section className="glass" style={{
+      <section style={{
         display: 'flex',
         justifyContent: 'center',
         gap: '48px',
         padding: '40px 20px',
         flexWrap: 'wrap',
-        background: 'rgba(17, 25, 40, 0.6)',
-        backdropFilter: 'blur(14px) saturate(140%)',
-        WebkitBackdropFilter: 'blur(14px) saturate(140%)',
         borderTop: '1px solid rgba(255,255,255,0.1)',
         borderBottom: '1px solid rgba(255,255,255,0.1)',
+        background: 'rgba(0,0,0,0.2)',
       }}>
         {STATS.map((stat, i) => (
           <div key={i} style={{ textAlign: 'center' }}>
@@ -401,14 +380,8 @@ export default function HomePage() {
         }}>
           {STEPS.map((step, i) => (
             <div key={i} className="glass" style={{
-              background: 'rgba(17, 25, 40, 0.55)',
-              backdropFilter: 'blur(14px) saturate(140%)',
-              WebkitBackdropFilter: 'blur(14px) saturate(140%)',
-              borderRadius: '16px',
               padding: '32px',
-              border: '1px solid rgba(255,255,255,0.15)',
               position: 'relative',
-              boxShadow: '0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)',
             }}>
               <div style={{
                 width: '48px',
@@ -467,16 +440,9 @@ export default function HomePage() {
           }}>
             {FEATURES.map((feature, i) => (
               <div key={i} className="glass" style={{
-                background: 'rgba(17, 25, 40, 0.55)',
-                backdropFilter: 'blur(14px) saturate(140%)',
-                WebkitBackdropFilter: 'blur(14px) saturate(140%)',
-                borderRadius: '16px',
-                padding: '28px',
-                border: '1px solid rgba(255,255,255,0.15)',
-                boxShadow: '0 10px 30px rgba(0,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.05)',
-                transition: 'transform 0.2s, box-shadow 0.2s',
+                padding: '24px',
               }}>
-                <div style={{ fontSize: '36px', marginBottom: '16px' }}>{feature.icon}</div>
+                <div style={{ fontSize: '32px', marginBottom: '16px' }}>{feature.icon}</div>
                 <h3 style={{ fontSize: '18px', fontWeight: 600, color: 'white', marginBottom: '8px' }}>
                   {feature.title}
                 </h3>
@@ -497,13 +463,8 @@ export default function HomePage() {
         textAlign: 'center',
       }}>
         <div className="glass" style={{
-          background: 'linear-gradient(135deg, rgba(17, 25, 40, 0.7) 0%, rgba(30, 41, 59, 0.6) 100%)',
-          backdropFilter: 'blur(14px) saturate(140%)',
-          WebkitBackdropFilter: 'blur(14px) saturate(140%)',
-          borderRadius: '24px',
           padding: '48px',
-          border: '1px solid rgba(255,255,255,0.15)',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
+          borderRadius: '20px',
         }}>
           <div style={{ fontSize: '48px', marginBottom: '24px', color: '#60a5fa' }}>&ldquo;</div>
           <p style={{
@@ -545,13 +506,7 @@ export default function HomePage() {
                 key={i}
                 className="glass"
                 style={{
-                  background: 'rgba(17, 25, 40, 0.55)',
-                  backdropFilter: 'blur(14px) saturate(140%)',
-                  WebkitBackdropFilter: 'blur(14px) saturate(140%)',
-                  borderRadius: '16px',
-                  border: '1px solid rgba(255,255,255,0.15)',
                   overflow: 'hidden',
-                  boxShadow: '0 10px 30px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05)',
                 }}
               >
                 <button
@@ -607,91 +562,77 @@ export default function HomePage() {
       <section style={{
         padding: '80px 20px',
         textAlign: 'center',
-        maxWidth: '700px',
+        maxWidth: '600px',
         margin: '0 auto',
       }}>
-        <div className="glass" style={{
-          background: 'rgba(17, 25, 40, 0.6)',
-          backdropFilter: 'blur(14px) saturate(140%)',
-          WebkitBackdropFilter: 'blur(14px) saturate(140%)',
-          borderRadius: '24px',
-          padding: '48px 32px',
-          border: '1px solid rgba(255,255,255,0.15)',
-          boxShadow: '0 20px 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.05)',
+        <h2 style={{
+          fontSize: '32px',
+          fontWeight: 700,
+          color: 'white',
+          marginBottom: '16px',
         }}>
-          <h2 style={{
-            fontSize: '32px',
-            fontWeight: 700,
-            color: 'white',
-            marginBottom: '16px',
-          }}>
-            Ready to estimate faster?
-          </h2>
-          <p style={{
-            fontSize: '16px',
-            color: '#94a3b8',
-            marginBottom: '32px',
-          }}>
-            No signup required. Enter an address and start estimating in seconds.
-          </p>
-          <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button
-              onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-              style={{
-                padding: '16px 32px',
-                background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
-                color: 'white',
-                border: 'none',
-                borderRadius: '12px',
-                fontSize: '16px',
-                fontWeight: 600,
-                cursor: 'pointer',
-                boxShadow: '0 4px 14px rgba(59, 130, 246, 0.4)',
-              }}
-            >
-              Start Estimating Free
-            </button>
-            <Link
-              href="/login"
-              style={{
-                padding: '16px 32px',
-                background: 'rgba(255,255,255,0.1)',
-                color: 'white',
-                textDecoration: 'none',
-                borderRadius: '12px',
-                fontSize: '16px',
-                fontWeight: 600,
-                border: '1px solid rgba(255,255,255,0.2)',
-                display: 'inline-block',
-              }}
-            >
-              Sign In
-            </Link>
-          </div>
+          Ready to estimate faster?
+        </h2>
+        <p style={{
+          fontSize: '16px',
+          color: '#94a3b8',
+          marginBottom: '32px',
+        }}>
+          No signup required. Enter an address and start estimating in seconds.
+        </p>
+        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <button
+            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+            style={{
+              padding: '16px 32px',
+              background: 'linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)',
+              color: 'white',
+              border: 'none',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: 600,
+              cursor: 'pointer',
+            }}
+          >
+            Start Estimating Free
+          </button>
+          <Link
+            href="/login"
+            style={{
+              padding: '16px 32px',
+              background: 'transparent',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '12px',
+              fontSize: '16px',
+              fontWeight: 600,
+              border: '1px solid rgba(255,255,255,0.3)',
+              display: 'inline-block',
+            }}
+          >
+            Sign In
+          </Link>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="glass" style={{
+      <footer style={{
         padding: '40px 20px',
-        background: 'rgba(17, 25, 40, 0.75)',
-        backdropFilter: 'blur(14px) saturate(140%)',
-        WebkitBackdropFilter: 'blur(14px) saturate(140%)',
         borderTop: '1px solid rgba(255,255,255,0.1)',
         textAlign: 'center',
       }}>
         <div style={{ display: 'flex', justifyContent: 'center', gap: '24px', marginBottom: '20px', flexWrap: 'wrap' }}>
-          <Link href="/dashboard" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }}>
+          <Link href="/dashboard" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px' }}>
             Dashboard
           </Link>
-          <Link href="/blueprint" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }}>
+          <Link href="/blueprint" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px' }}>
             Blueprints
           </Link>
-          <Link href="/login" style={{ color: '#94a3b8', textDecoration: 'none', fontSize: '14px' }}>
+          <Link href="/login" style={{ color: '#64748b', textDecoration: 'none', fontSize: '14px' }}>
             Sign In
           </Link>
         </div>
-        <p style={{ fontSize: '13px', color: '#64748b', margin: 0 }}>
+        <p style={{ fontSize: '13px', color: '#475569', margin: 0 }}>
           &copy; {new Date().getFullYear()} Job Sense. Built for contractors.
         </p>
       </footer>

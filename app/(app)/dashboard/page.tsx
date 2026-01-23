@@ -476,9 +476,15 @@ export default function DashboardPage() {
   }, [addBid]);
 
   const handleBidClick = useCallback((bid: Bid) => {
-    // For now, just log - could navigate to bid detail page
-    console.log('Bid clicked:', bid.id);
-  }, []);
+    // Navigate to the map with the bid's address
+    const address = bid.customer_address || bid.customer_name;
+    if (address) {
+      router.push(`/quote/map?address=${encodeURIComponent(address)}`);
+    } else {
+      // If no address, go to the new quote page to enter one
+      router.push('/quote/new');
+    }
+  }, [router]);
 
   // Show only active stages (exclude archived for main view)
   const activeStages = PIPELINE_STAGES.filter(s => !['archived'].includes(s.id));

@@ -258,6 +258,7 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
 }) {
   const [name, setName] = useState('');
   const [customerName, setCustomerName] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
   const [estimatedValue, setEstimatedValue] = useState('');
   const [dueDate, setDueDate] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -272,6 +273,7 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
     onCreate({
       name: name.trim(),
       customer_name: customerName.trim() || null,
+      customer_address: customerAddress.trim() || null,
       estimated_value: estimatedValue ? parseFloat(estimatedValue) : null,
       bid_due_date: dueDate || null,
       stage: 'lead',
@@ -285,6 +287,7 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
     onClose();
     setName('');
     setCustomerName('');
+    setCustomerAddress('');
     setEstimatedValue('');
     setDueDate('');
   };
@@ -340,6 +343,25 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
               value={customerName}
               onChange={(e) => setCustomerName(e.target.value)}
               placeholder="e.g., ABC Property Management"
+              style={{
+                width: '100%',
+                padding: '10px 12px',
+                border: '1px solid #d1d5db',
+                borderRadius: '8px',
+                fontSize: '14px',
+              }}
+            />
+          </div>
+
+          <div style={{ marginBottom: '16px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, marginBottom: '6px' }}>
+              Site Address
+            </label>
+            <input
+              type="text"
+              value={customerAddress}
+              onChange={(e) => setCustomerAddress(e.target.value)}
+              placeholder="e.g., 123 Main St, Austin, TX 78701"
               style={{
                 width: '100%',
                 padding: '10px 12px',
@@ -452,7 +474,7 @@ export default function DashboardPage() {
       customer_email: null,
       customer_phone: null,
       customer_company: null,
-      customer_address: null,
+      customer_address: data.customer_address || null,
       stage: data.stage || 'lead',
       stage_updated_at: new Date().toISOString(),
       loss_reason: null,

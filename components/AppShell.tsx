@@ -50,8 +50,8 @@ export default function AppShell({
         </nav>
       </aside>
 
-      <div className="flex flex-1 flex-col">
-        <header className="app-shell-header px-6 py-4">
+      <div className="flex flex-1 flex-col min-h-0 overflow-hidden">
+        <header className="app-shell-header px-6 py-4 flex-shrink-0">
           <div className="flex items-center justify-between">
             <div>
               <p className="text-sm text-[color:var(--muted)]">
@@ -62,7 +62,7 @@ export default function AppShell({
           </div>
         </header>
 
-        <main className="flex-1 overflow-auto px-6 py-8">{children}</main>
+        <main className="flex-1 overflow-auto min-h-0 px-6 py-8">{children}</main>
       </div>
     </div>
   );

@@ -12,7 +12,7 @@
 
 import { NextRequest, NextResponse } from 'next/server';
 import Anthropic from '@anthropic-ai/sdk';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabase/client';
 import {
   BLUEPRINT_SYSTEM_PROMPT,
   buildBlueprintAnalysisPrompt,
@@ -41,11 +41,6 @@ export type {
   FootprintInfo,
   DetectedLinearFeature,
 };
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 // Rate limiting
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
@@ -99,6 +94,8 @@ export async function POST(request: NextRequest): Promise<NextResponse<Blueprint
         { status: 429 }
       );
     }
+
+    const supabase = getSupabaseClient();
 
     // Parse request
     const body: BlueprintAnalysisRequest = await request.json();

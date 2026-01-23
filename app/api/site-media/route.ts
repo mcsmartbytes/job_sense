@@ -5,13 +5,8 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabase/client';
 import type { SiteMediaType, SiteMediaCategory } from '@/lib/supabase/types';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
 const ALLOWED_IMAGE_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/heic', 'image/heif'];
@@ -36,6 +31,7 @@ export async function GET(request: NextRequest) {
   }
 
   try {
+    const supabase = getSupabaseClient();
     const { data: media, error } = await supabase
       .from('site_media')
       .select('*')
@@ -94,6 +90,7 @@ export async function GET(request: NextRequest) {
 // POST - Upload new media
 export async function POST(request: NextRequest) {
   try {
+    const supabase = getSupabaseClient();
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
     const siteId = formData.get('siteId') as string | null;

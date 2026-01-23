@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabase/client';
 import type { BidUpdate, BidStage } from '@/lib/supabase/types';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 interface RouteParams {
   params: Promise<{ bidId: string }>;
@@ -14,6 +9,7 @@ interface RouteParams {
 // GET: Get single bid with related data
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
+    const supabase = getSupabaseClient();
     const { bidId } = await params;
 
     // Get bid with site info
@@ -76,6 +72,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // PATCH: Update bid
 export async function PATCH(request: NextRequest, { params }: RouteParams) {
   try {
+    const supabase = getSupabaseClient();
     const { bidId } = await params;
     const body = await request.json();
 
@@ -167,6 +164,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
 // DELETE: Archive bid (soft delete)
 export async function DELETE(request: NextRequest, { params }: RouteParams) {
   try {
+    const supabase = getSupabaseClient();
     const { bidId } = await params;
 
     // Soft delete by changing stage to archived

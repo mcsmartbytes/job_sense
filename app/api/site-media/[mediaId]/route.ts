@@ -5,12 +5,7 @@
  */
 
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { getSupabaseClient } from '@/lib/supabase/client';
 
 interface RouteParams {
   params: Promise<{ mediaId: string }>;
@@ -21,6 +16,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const { mediaId } = await params;
 
   try {
+    const supabase = getSupabaseClient();
     // Get the media record first
     const { data: media, error: fetchError } = await supabase
       .from('site_media')
@@ -79,6 +75,7 @@ export async function PATCH(request: NextRequest, { params }: RouteParams) {
   const { mediaId } = await params;
 
   try {
+    const supabase = getSupabaseClient();
     const body = await request.json();
     const { caption, category } = body;
 

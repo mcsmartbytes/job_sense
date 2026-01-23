@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { getSupabaseClient } from '@/lib/supabase/client';
 
 interface RouteParams {
   params: Promise<{ documentId: string }>;
@@ -15,6 +10,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
   const { documentId } = await params;
 
   try {
+    const supabase = getSupabaseClient();
     // Get document
     const { data: document, error: docError } = await supabase
       .from('pdf_documents')
@@ -121,6 +117,7 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
   const { documentId } = await params;
 
   try {
+    const supabase = getSupabaseClient();
     // Get document to find storage path
     const { data: document, error: docError } = await supabase
       .from('pdf_documents')

@@ -1,10 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { getSupabaseClient } from '@/lib/supabase/client';
 
 interface RouteParams {
   params: Promise<{ documentId: string }>;
@@ -46,6 +41,7 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
   const { documentId } = await params;
 
   try {
+    const supabase = getSupabaseClient();
     // Get document from database
     const { data: document, error: docError } = await supabase
       .from('pdf_documents')
@@ -188,13 +184,18 @@ export async function POST(request: NextRequest, { params }: RouteParams) {
 
   } catch (error) {
     console.error('Processing error:', error);
-    await supabase
-      .from('pdf_documents')
-      .update({
-        status: 'error',
-        error_message: error instanceof Error ? error.message : 'Processing failed',
-      })
-      .eq('id', documentId);
+    try {
+      const supabase = getSupabaseClient();
+      await supabase
+        .from('pdf_documents')
+        .update({
+          status: 'error',
+          error_message: error instanceof Error ? error.message : 'Processing failed',
+        })
+        .eq('id', documentId);
+    } catch {
+      // Ignore errors updating status
+    }
 
     return NextResponse.json(
       { error: 'Failed to process PDF' },

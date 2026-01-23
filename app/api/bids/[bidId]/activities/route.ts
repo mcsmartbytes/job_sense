@@ -1,11 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
+import { getSupabaseClient } from '@/lib/supabase/client';
 import type { BidActivityInsert } from '@/lib/supabase/types';
-
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
 
 interface RouteParams {
   params: Promise<{ bidId: string }>;
@@ -14,6 +9,7 @@ interface RouteParams {
 // GET: List activities for a bid
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
+    const supabase = getSupabaseClient();
     const { bidId } = await params;
 
     const { data: activities, error } = await supabase
@@ -47,6 +43,7 @@ export async function GET(request: NextRequest, { params }: RouteParams) {
 // POST: Create new activity
 export async function POST(request: NextRequest, { params }: RouteParams) {
   try {
+    const supabase = getSupabaseClient();
     const { bidId } = await params;
     const body = await request.json();
 

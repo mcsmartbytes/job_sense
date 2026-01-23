@@ -1,11 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase client with service role for storage operations
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-);
+import { getSupabaseClient } from '@/lib/supabase/client';
 
 const MAX_FILE_SIZE = 100 * 1024 * 1024; // 100MB
 const ALLOWED_TYPES = [
@@ -56,6 +50,7 @@ function getPageCountFromPDF(pdfBuffer: ArrayBuffer): number {
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = getSupabaseClient();
     const formData = await request.formData();
     const file = formData.get('file') as File | null;
     const organizationId = formData.get('organizationId') as string | null;
@@ -204,6 +199,7 @@ export async function POST(request: NextRequest) {
 // GET: List documents for organization
 export async function GET(request: NextRequest) {
   try {
+    const supabase = getSupabaseClient();
     const { searchParams } = new URL(request.url);
     const organizationId = searchParams.get('organizationId');
 

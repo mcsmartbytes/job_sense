@@ -62,7 +62,7 @@ export default function AppShell({
           </div>
         </header>
 
-        <main className="flex-1 px-6 py-8">{children}</main>
+        <main className="flex-1 overflow-auto px-6 py-8">{children}</main>
       </div>
     </div>
   );

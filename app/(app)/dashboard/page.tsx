@@ -476,13 +476,13 @@ export default function DashboardPage() {
   }, [addBid]);
 
   const handleBidClick = useCallback((bid: Bid) => {
-    // Navigate to the map with the bid's address
+    // Navigate to the site estimator with the bid's address
     const address = bid.customer_address || bid.customer_name;
     if (address) {
-      router.push(`/quote/map?address=${encodeURIComponent(address)}`);
+      router.push(`/site?address=${encodeURIComponent(address)}`);
     } else {
-      // If no address, go to the new quote page to enter one
-      router.push('/quote/new');
+      // If no address, go to the site estimator without address
+      router.push('/site');
     }
   }, [router]);
 

@@ -3897,9 +3897,10 @@ select option {
 
 
 .app-shell {
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   color: var(--fg);
+  overflow: hidden;
 }
 
 .app-shell-sidebar {

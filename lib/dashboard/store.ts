@@ -12,6 +12,7 @@ import type {
   BidStage,
   BidPriority,
 } from '@/lib/supabase/types';
+import { useJobsStore } from '@/lib/jobs/store';
 
 // Pipeline stage configuration
 export const PIPELINE_STAGES: Array<{
@@ -124,11 +125,23 @@ export const useDashboardStore = create<DashboardState>()(
         bids: [...state.bids, bid],
       })),
 
-      updateBid: (id, updates) => set((state) => ({
-        bids: state.bids.map((bid) =>
-          bid.id === id ? { ...bid, ...updates, updated_at: new Date().toISOString() } : bid
-        ),
-      })),
+      updateBid: (id, updates) => {
+        const state = get();
+        const bid = state.bids.find((b) => b.id === id);
+
+        // Check if bid is being moved to "won" status
+        if (bid && updates.stage === 'won' && bid.stage !== 'won') {
+          // Create a job from the won bid
+          const updatedBid = { ...bid, ...updates, updated_at: new Date().toISOString() };
+          useJobsStore.getState().createJobFromBid(updatedBid);
+        }
+
+        set((state) => ({
+          bids: state.bids.map((bid) =>
+            bid.id === id ? { ...bid, ...updates, updated_at: new Date().toISOString() } : bid
+          ),
+        }));
+      },
 
       removeBid: (id) => set((state) => ({
         bids: state.bids.filter((bid) => bid.id !== id),

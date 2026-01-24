@@ -113,7 +113,7 @@ function BidCard({ bid, onClick }: { bid: Bid; onClick: () => void }) {
           <p style={{
             fontSize: '13px',
             color: '#6b7280',
-            margin: '0 0 10px 0',
+            margin: '0 0 6px 0',
             display: 'flex',
             alignItems: 'center',
             gap: '6px',
@@ -122,6 +122,23 @@ function BidCard({ bid, onClick }: { bid: Bid; onClick: () => void }) {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
             </svg>
             <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{bid.customer_name}</span>
+          </p>
+        )}
+
+        {bid.customer_address && (
+          <p style={{
+            fontSize: '12px',
+            color: '#10b981',
+            margin: '0 0 10px 0',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '6px',
+          }}>
+            <svg style={{ width: '14px', height: '14px', flexShrink: 0 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+            </svg>
+            <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{bid.customer_address}</span>
           </p>
         )}
 
@@ -310,12 +327,12 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
         boxShadow: '0 20px 25px -5px rgba(0,0,0,0.1)',
       }}>
         <div style={{ padding: '20px', borderBottom: '1px solid #e5e7eb' }}>
-          <h2 style={{ fontSize: '18px', fontWeight: 600, margin: 0 }}>Create New Bid</h2>
+          <h2 style={{ fontSize: '18px', fontWeight: 600, margin: 0, color: '#111827' }}>Create New Bid</h2>
         </div>
 
         <form onSubmit={handleSubmit} style={{ padding: '20px' }}>
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, marginBottom: '6px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', color: '#111827' }}>
               Bid Name *
             </label>
             <input
@@ -330,12 +347,13 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
                 border: '1px solid #d1d5db',
                 borderRadius: '8px',
                 fontSize: '14px',
+                color: '#111827',
               }}
             />
           </div>
 
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, marginBottom: '6px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', color: '#111827' }}>
               Customer Name
             </label>
             <input
@@ -349,12 +367,13 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
                 border: '1px solid #d1d5db',
                 borderRadius: '8px',
                 fontSize: '14px',
+                color: '#111827',
               }}
             />
           </div>
 
           <div style={{ marginBottom: '16px' }}>
-            <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, marginBottom: '6px' }}>
+            <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', color: '#111827' }}>
               Site Address
             </label>
             <input
@@ -368,13 +387,14 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
                 border: '1px solid #d1d5db',
                 borderRadius: '8px',
                 fontSize: '14px',
+                color: '#111827',
               }}
             />
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }}>
             <div>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', color: '#111827' }}>
                 Estimated Value
               </label>
               <input
@@ -388,11 +408,12 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
                   border: '1px solid #d1d5db',
                   borderRadius: '8px',
                   fontSize: '14px',
+                  color: '#111827',
                 }}
               />
             </div>
             <div>
-              <label style={{ display: 'block', fontSize: '14px', fontWeight: 500, marginBottom: '6px' }}>
+              <label style={{ display: 'block', fontSize: '14px', fontWeight: 600, marginBottom: '6px', color: '#111827' }}>
                 Due Date
               </label>
               <input
@@ -405,6 +426,7 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
                   border: '1px solid #d1d5db',
                   borderRadius: '8px',
                   fontSize: '14px',
+                  color: '#111827',
                 }}
               />
             </div>
@@ -422,6 +444,7 @@ function CreateBidModal({ isOpen, onClose, onCreate }: {
                 fontSize: '14px',
                 fontWeight: 500,
                 cursor: 'pointer',
+                color: '#374151',
               }}
             >
               Cancel

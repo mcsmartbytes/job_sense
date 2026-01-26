@@ -9,6 +9,7 @@ const navItems = [
   { href: "/estimates", label: "Estimates" },
   { href: "/jobs", label: "Jobs" },
   { href: "/reports", label: "Reports" },
+  { href: "/profile", label: "Profile" },
 ];
 
 export default function AppShell({
